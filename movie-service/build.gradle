@@ -19,6 +19,9 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
+	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.36'
+
 }
 
 test {

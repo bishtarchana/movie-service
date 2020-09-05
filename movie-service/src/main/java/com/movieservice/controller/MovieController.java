@@ -13,9 +13,8 @@ import java.util.List;
 public class MovieController {
 
     @GetMapping("/home")
-    @ResponseBody()
     public String displayHome(){
-        return "You are in home page of movie service" ;
+        return "welcome" ;
     }
 
     @GetMapping("/movie")
