@@ -22,4 +22,8 @@ public class Movie {
         return releaseYear;
     }
 
+    @Override
+    public java.lang.String toString() {
+        return id + " " + name + " " + releaseYear;
+    }
 }
