@@ -1,11 +1,22 @@
 package com.movieservice.data;
 
-public class Movie {
-    private String name;
-    private int id;
-    private  int releaseYear;
+import javax.persistence.*;
 
-    public Movie(String name,int id,int releaseYear){
+@Entity
+@Table(name="MOVIE")
+public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="MOVIE_ID")
+    private Integer id;
+
+    @Column(name="NAME")
+    private String name;
+
+    @Column(name="RELEASE_YEAR")
+    private  Integer releaseYear;
+
+    public Movie(String name,Integer id,Integer releaseYear){
         this.name = name;
         this.id = id;
         this.releaseYear = releaseYear;
@@ -15,10 +26,10 @@ public class Movie {
         return name;
     }
 
-    public int getId(){
+    public Integer getId(){
         return id;
     }
-    public int getReleaseYear(){
+    public Integer getReleaseYear(){
         return releaseYear;
     }
 
