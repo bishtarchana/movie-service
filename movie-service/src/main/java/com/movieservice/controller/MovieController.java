@@ -1,9 +1,6 @@
 package com.movieservice.controller;
 
-import com.movieservice.data.Movie;
-import com.movieservice.data.MovieDTO;
-import com.movieservice.data.MovieNameComparator;
-import com.movieservice.data.MovieReleaseComparator;
+import com.movieservice.data.*;
 import com.movieservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -51,7 +45,7 @@ public class MovieController {
     @ResponseBody()
     public List<Movie> getMovieWithinRangeOfYear(){
         List<Movie> allMovie = movieService.getAllMovies();
-        List<Movie> filteredListMovie = allMovie.parallelStream().filter(i -> i.getReleaseYear() >= 2000 && i.getReleaseYear() <= 2005).collect(Collectors.toList());
+        List<Movie> filteredListMovie = allMovie.parallelStream().filter(MoviePredicate.getMovieBySpecificRange(1998,2008)).collect(Collectors.toList());
         Collections.sort(filteredListMovie);
         return filteredListMovie;
     }
@@ -98,10 +92,43 @@ public class MovieController {
     @GetMapping("/getMovieByRange")
     @ResponseBody()
     public List<Movie> getMovieByRange(){
-        List<Movie> movies = getAllMovieDetail();
+        List<Movie> movies = movieService.getAllMovies();
 
-        List<Movie> filteredMovies = movies.stream().filter(i -> i.getReleaseYear() >= 2000 && i.getReleaseYear() <= 2005).collect(Collectors.toList());
+        List<Movie> filteredMovies = movies.stream().filter(MoviePredicate.getMovieBySpecificRange(2000,2005)).collect(Collectors.toList());
         return filteredMovies;
+    }
+
+    @GetMapping("/getMovieNameInUpperCase")
+    @ResponseBody()
+    public List<String> getMovieNameInUpperCase(){
+        List<String> newMovieList = new ArrayList<>();
+        List<Movie> movies = movieService.getAllMovies();
+
+        /**
+         * Following are the different ways of iterating through List
+         */
+
+        /**
+         * THROUGH ITERATOR
+         * ListIterator<Movie> iterator = movies.listIterator();
+         *        while (iterator.hasNext())
+         *         {
+         *             String s = iterator.next().getName().toUpperCase();
+         *               newMovieList.add(s);
+         *         }
+         */
+
+        /**
+         * THROUGH FOR EACH
+         * for(Movie movie : movies){
+         *    newMovieList.add(movie.getName().toUpperCase());
+         * }
+         */
+
+        /**
+         * THROUGH PARALLELSTREAM
+         */
+        return movies.parallelStream().map(movie -> movie.getName().toUpperCase()).collect(Collectors.toList());
     }
 
     @GetMapping("/getEvenNumber")
@@ -119,7 +146,7 @@ public class MovieController {
         num.add(3571);
         num.add(871);
 
-        List<Integer> evenNumbers = num.parallelStream().filter(i -> i % 2 == 0).collect(Collectors.toList());
+        List<Integer> evenNumbers = num.parallelStream().filter(MoviePredicate.getEvenNummber()).collect(Collectors.toList());
         return evenNumbers;
     }
 
