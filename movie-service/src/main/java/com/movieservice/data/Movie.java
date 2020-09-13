@@ -4,7 +4,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="MOVIE")
-public class Movie {
+public class Movie implements Comparable<Movie> {
+
+    public Movie(){}
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setReleaseYear(Integer releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="MOVIE_ID")
@@ -36,5 +51,10 @@ public class Movie {
     @Override
     public java.lang.String toString() {
         return id + " " + name + " " + releaseYear;
+    }
+
+    @Override
+    public int compareTo(Movie movie){
+        return this.releaseYear.compareTo(movie.releaseYear);
     }
 }

@@ -7,7 +7,7 @@ public class MovieDTO {
 
 
     private String name;
-    private int releaseYear;
+    private Integer releaseYear;
 
     public void setName(String name) {
         this.name = name;
@@ -21,7 +21,7 @@ public class MovieDTO {
         return name;
     }
 
-    public int getReleaseYear(){
+    public Integer getReleaseYear(){
         return releaseYear;
     }
 
@@ -31,4 +31,5 @@ public class MovieDTO {
         movieDTO.setReleaseYear(movie.getReleaseYear());
         return movieDTO;
     }
+
 }
